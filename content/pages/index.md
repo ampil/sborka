@@ -12,12 +12,12 @@ template: "index-template"
 Здесь находится сборник текстов и материалов, созданных по мотивам этого события.
 </div>
 
-<!-- <div class="index-image"> -->
+<!-- <div className="index-image"> -->
 <!-- <img src="/media/zu-talks-posleslovie.png"> -->
 <!-- </div> -->
 
 <!-- <div style="background-image: url('/media/zu-talks-posleslovie.png'); width=100%">
 
-<div class="hero-image">
+<div className="hero-image">
 " "
 </div> -->

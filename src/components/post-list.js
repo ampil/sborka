@@ -41,7 +41,7 @@ const PostListItem = ({
   return (
     <StyledPostListItem>
       {/* <Tags tags={tags} /> */}
-      {/* <div class="index-image" /> */}
+      {/* <div className="index-image" /> */}
       {/* <img src="/media/zu-talks-posleslovie.png"></img> */}
       <PostListTitle>
         <Link to={slug}>{title}</Link>

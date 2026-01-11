@@ -1,3 +1,5 @@
+// src/pages/404.js
+
 import React from 'react';
 import Layout from '../components/layout';
 import { Ghost } from 'react-kawaii';

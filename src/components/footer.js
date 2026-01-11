@@ -1,3 +1,5 @@
+//src/components/footer.js
+
 import React from 'react';
 import Container from './container';
 import styled from 'styled-components';

@@ -1,3 +1,5 @@
+// src/pages/tags.js
+
 import React from "react";
 import Layout from "../components/layout";
 import { Link, graphql } from "gatsby";
@@ -46,16 +48,14 @@ const Tags = ({ data }) => {
 
 export default Tags;
 
-export const pageQuery = graphql`
-  query {
-    allMarkdownRemark(limit: 2000) {
-      group(field: frontmatter___tags) {
-        fieldValue
-        totalCount
-      }
+export const pageQuery = graphql`{
+  allMarkdownRemark(limit: 2000) {
+    group(field: {frontmatter: {tags: SELECT}}) {
+      fieldValue
+      totalCount
     }
   }
-`;
+}`;
 
 const TagList = styled.ul`
   list-style: none;

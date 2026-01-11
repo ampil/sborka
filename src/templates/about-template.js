@@ -1,3 +1,5 @@
+// src/templates/about-template.js
+
 import React from 'react';
 import Layout from '../components/layout';
 import {graphql} from 'gatsby';
@@ -28,9 +30,13 @@ const AboutWrapper = styled.div`
   height: 100%;
 
   a {
-    color: #962020;
+    color: #962020; /* Светлая тема */
     text-decoration: underline;
-    //text-decoration-thickness: 0.125rem;
+  }
+
+  /* Темная тема */
+  body.dark-mode & a {
+    color: #ff9999; /* Тот же светлый цвет, что и в постах */
   }
 
   @media screen and (max-width: 1000px) {

@@ -1,9 +1,12 @@
+// src/templates/index-template.js
+
 import React from 'react';
 import {graphql} from 'gatsby';
 import Layout from '../components/layout';
 import PostList from '../components/post-list';
 import styled from 'styled-components';
-import bgImage from '../components/bg-image';
+import Seo from '../components/seo';
+
 
 const HomePage = ({data}) => {
   const posts = data.allMarkdownRemark.nodes;
@@ -11,7 +14,6 @@ const HomePage = ({data}) => {
   const title = data.markdownRemark.frontmatter.title;
 
   return (
-    // <Layout title={title}>
     (
       <Layout title="">
         <Intro
@@ -20,16 +22,12 @@ const HomePage = ({data}) => {
           }}
         />
 
-        {/* <bgImage /> */}
-
         <PostList posts={posts} />
 
       </Layout>
     )
   );
 };
-
-export default HomePage;
 
 const Intro = styled.div`
   display: flex;
@@ -65,38 +63,42 @@ const Intro = styled.div`
 
 `;
 
-export const pageQuery = graphql`
-  query($slug: String!) {
-    site {
-      siteMetadata {
-        title
-      }
+export const pageQuery = graphql`query ($slug: String!) {
+  site {
+    siteMetadata {
+      title
     }
-    allMarkdownRemark(
-      filter: { fields: { contentType: { eq: "posts" } } }
-      sort: { order: DESC, fields: frontmatter___date }
-      limit: 49
-    ) {
-      nodes {
-        fields {
-          slug
-        }
-        excerpt
-        timeToRead
-        frontmatter {
-          date(formatString: "DD MMMM YYYY", locale: "ru")
-          description
-          name
-          title
-          tags
-        }
+  }
+  allMarkdownRemark(
+    filter: {fields: {contentType: {eq: "posts"}}}
+    sort: {frontmatter: {date: DESC}}
+    limit: 49
+  ) {
+    nodes {
+      fields {
+        slug
       }
-    }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+      excerpt
+      timeToRead
       frontmatter {
+        date(formatString: "DD MMMM YYYY", locale: "ru")
+        description
+        name
         title
+        tags
       }
     }
   }
-`;
+  markdownRemark(fields: {slug: {eq: $slug}}) {
+    html
+    frontmatter {
+      title
+    }
+  }
+}`;
+
+export const Head = ({ data }) => (
+  <Seo title={data.markdownRemark.frontmatter.title} />
+);
+
+export default HomePage;

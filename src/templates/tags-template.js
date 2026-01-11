@@ -1,8 +1,11 @@
+// src/templates/tags-template.js
+
 import React from 'react';
 import {Link, graphql} from 'gatsby';
 import Layout from '../components/layout';
 import PostList from '../components/post-list';
 import styled from 'styled-components';
+import Tags from '../components/tags';
 
 const TagsTemplate = ({pageContext, data}) => {
   const {tag} = pageContext;
@@ -57,30 +60,25 @@ const Title = styled.h1`
   }  
 `;
 
-export const pageQuery = graphql`
-  query($tag: String) {
-    allMarkdownRemark(
-      limit: 2000
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: {
-        frontmatter: { tags: { in: [$tag] } }
-        fields: { contentType: { eq: "posts" } }
+export const pageQuery = graphql`query ($tag: String) {
+  allMarkdownRemark(
+    limit: 2000
+    sort: {frontmatter: {date: DESC}}
+    filter: {frontmatter: {tags: {in: [$tag]}}, fields: {contentType: {eq: "posts"}}}
+  ) {
+    totalCount
+    nodes {
+      fields {
+        slug
       }
-    ) {
-      totalCount
-      nodes {
-        fields {
-          slug
-        }
-        frontmatter {
-          date(formatString: "DD MMMM YYYY", locale: "ru")
-          description
-          tags
-          title
-        }
-        timeToRead
-        excerpt
+      frontmatter {
+        date(formatString: "DD MMMM YYYY", locale: "ru")
+        description
+        tags
+        title
       }
+      timeToRead
+      excerpt
     }
   }
-`;
+}`;

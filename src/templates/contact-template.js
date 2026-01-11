@@ -1,3 +1,5 @@
+// src/templates/contact-template.js
+
 import React from 'react';
 import Layout from '../components/layout';
 import {graphql} from 'gatsby';
@@ -16,7 +18,7 @@ const ContactTemplate = ({data}) => {
       <br /><br />
       <p align="center">Напишите нам:</p>
       <br />
-      <div class="cForm">
+      <div className="cForm">
         <ContactForm />
       </div>
     </Layout>

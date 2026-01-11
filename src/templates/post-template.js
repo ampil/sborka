@@ -1,6 +1,9 @@
+// src/templates/post-template.js
+
 import React from 'react';
 import {Link, graphql} from 'gatsby';
 import Layout from '../components/layout';
+import Seo from '../components/seo';
 import styled from 'styled-components';
 import Tags from '../components/tags';
 import zuHomeImg from '../images/zu-home.png';
@@ -13,8 +16,8 @@ const PostTemplate = ({data}) => {
 
   return (
     <Layout
-      title={frontmatter.title}
-      description={frontmatter.description || excerpt}
+      // title={frontmatter.title}
+      // description={frontmatter.description || excerpt}
       socialImage={
         frontmatter.social_image ? frontmatter.social_image.absolutePath : ''
       }
@@ -54,8 +57,6 @@ const PostTemplate = ({data}) => {
     </Layout>
   );
 };
-
-export default PostTemplate;
 
 const PostWrapper = styled.div`
   padding-top: var(--size-900);
@@ -112,8 +113,15 @@ const PostContent = styled.section`
   }
 
   a {
-    color: #962020;
+    color: #962020; /* Цвет для СВЕТЛОЙ темы (по умолчанию) */
     text-decoration: underline;
+    transition: color 0.2s ease;
+  }
+
+  /* Добавляем стиль для ТЕМНОЙ темы */
+  body.dark-mode & a {
+    color: #ff9999; /* Светло-красный (или любой другой светлый оттенок) */
+    /* Или #e0e0e0 для белого, или #ffcccb */
   }
 
   blockquote {
@@ -122,12 +130,35 @@ const PostContent = styled.section`
     font-style: italic;
   }
 
-  code {
-    font-family: "Source Sans Pro", monospace;
-    overflow-x: auto;
-    white-space: pre-wrap;
+  /* Стили для инлайн-кода (слов в апострофах) */
+  /* Используем селектор & p > code, чтобы перебить глобальные стили PrismJS */
+  & p > code,
+  & li > code,
+  & blockquote > code {
+    font-family: "Source Sans Pro", Consolas, monospace;
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    
+    /* СВЕТЛАЯ ТЕМА (и дефолт) */
+    /* !important нужен, чтобы перебить prism-coldark-dark.css */
+    background-color: rgba(0, 0, 0, 0.08) !important; /* Светло-серый, почти прозрачный */
+    color: #c7254e !important;                        /* Темно-красный текст */
+    border: 1px solid rgba(0,0,0,0.1);
+    text-shadow: none !important;                     /* Убираем тени от Prism */
   }
 
+  /* ТЕМНАЯ ТЕМА */
+  body.dark-mode & p > code,
+  body.dark-mode & li > code,
+  body.dark-mode & blockquote > code {
+    background-color: rgba(255, 255, 255, 0.15) !important; /* Полупрозрачный белый */
+    color: #ffbdba !important;                              /* Светло-розовый */
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+
+  /* Стили для больших блоков кода */
   pre {
     overflow-x: auto;
     white-space: pre-wrap;
@@ -248,3 +279,16 @@ export const pageQuery = graphql`
     }
   }
 `;
+
+export const Head = ({ data }) => {
+  const { frontmatter, excerpt } = data.markdownRemark;
+  return (
+    <Seo
+      title={frontmatter.title}
+      description={frontmatter.description || excerpt}
+      // socialImage={...} 
+    />
+  );
+};
+
+export default PostTemplate;

@@ -1,7 +1,10 @@
+//src/components/tags.js
+
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'gatsby';
 
+// транслитерация букв
 const letters = {
   Ё: 'YO',
   Й: 'I',
@@ -84,10 +87,41 @@ const toKebabCase = str => {
     .join ('-');
 };
 
+
+// теги
+const Tag = styled.span`
+  margin-right: 0.6rem;
+  margin-bottom: 0.6rem;
+  
+  /* Стили контейнера тега (ссылки внутри) */
+  & a {
+    display: inline-block; /* Чтобы padding и border-radius работали корректно */
+    padding: 0.2em 0.6em;
+    border-radius: 0.3em;
+    background-color: #4d79af; 
+    color: #e3eaf2;           
+    text-decoration: none;
+    font-family: "Source Sans Pro", Consolas, monospace;
+    transition: background-color 0.2s ease; /* Плавный переход */
+    
+    /* Ховер эффект: фон темнее */
+    &:hover {
+      background-color: #3b608c; /* Чуть темнее #4d79af */
+    }
+  }
+
+  /* для темной темы использовать селекторы body.dark-mode */
+  /* body.dark-mode & a {
+       background-color: #2c4a6e; 
+     } 
+  */
+`;
+
+
 // shows tags in a post, i.e. http://localhost:8000/tags/after
 const Tags = ({tags}) => {
   return (
-    <div class="authors">
+    <div className="authors">
       {tags &&
         tags.map (tag => {
           return (
@@ -100,48 +134,6 @@ const Tags = ({tags}) => {
   );
 };
 
+
+
 export default Tags;
-
-const Tag = styled.span`
-  margin-right: 0.6rem;
-  margin-bottom: 0.6rem;
-  padding: 0.2em 0.6em;
-	border-radius: 0.3em;
-	white-space: normal;
-  // font-size: var(--size-300);
-  background-color: #4d79af;
-  color: #e3eaf2;
-  font-family: "Source Sans Pro", Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-	text-align: left;
-	white-space: pre;
-
-  & a {
-    position: relative;
-    z-index: 2;
-    text-decoration: none;
-    color: inherit;
-    // padding: 0.2rem 0.6rem;
-    // border: 1px solid rgba(255, 255, 255, 1);
-    // border-radius: 4px;
-  }
-
-  & a:hover {
-    // background-color: rgba(255, 255, 255, 0.9);
-  }
-
-  body.light-mode & a {
-    // backdrop-filter: blur(10px);
-    // border: 1px solid rgba(255, 255, 255, 0.5);
-    // background-color: rgba(255, 255, 255, 0.7);
-  }
-
-  body.light-mode & a:hover {
-    // background-color: rgba(255, 255, 255, 1);
-  }
-
-  body.dark-mode & a {
-    // background-color: #212122;
-    border: 1px solid #1a1a1b;
-    opacity: 0.8;
-  }
-`;

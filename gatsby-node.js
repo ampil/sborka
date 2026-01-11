@@ -30,32 +30,27 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
   const result = await graphql(
-    `
-      {
-        allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
-          limit: 1000
-        ) {
-          nodes {
-            fields {
-              contentType
-              slug
-            }
-            frontmatter {
-              template
-            }
-          }
-        }
-        tagsGroup: allMarkdownRemark(
-          limit: 2000
-          filter: { fields: { contentType: { eq: "posts" } } }
-        ) {
-          group(field: frontmatter___tags) {
-            fieldValue
-          }
-        }
+    `{
+  allMarkdownRemark(sort: {frontmatter: {date: DESC}}, limit: 1000) {
+    nodes {
+      fields {
+        contentType
+        slug
       }
-    `
+      frontmatter {
+        template
+      }
+    }
+  }
+  tagsGroup: allMarkdownRemark(
+    limit: 2000
+    filter: {fields: {contentType: {eq: "posts"}}}
+  ) {
+    group(field: {frontmatter: {tags: SELECT}}) {
+      fieldValue
+    }
+  }
+}`
   );
 
   if (result.errors) {
@@ -164,6 +159,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 };
 
+
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
 
@@ -180,7 +176,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type Social {
-      twitter: String
+      telegram: String
     }
 
     type MarkdownRemark implements Node {

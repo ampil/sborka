@@ -1,3 +1,5 @@
+// src/pages/blog.js
+
 import React from 'react';
 import {graphql, Link} from 'gatsby';
 import Layout from '../components/layout';
@@ -42,30 +44,28 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-export const homePageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
+export const homePageQuery = graphql`{
+  site {
+    siteMetadata {
+      title
     }
-    allMarkdownRemark(
-      filter: { fields: { contentType: { eq: "posts" } } }
-      sort: { order: DESC, fields: frontmatter___date }
-    ) {
-      nodes {
-        fields {
-          slug
-        }
-        excerpt
-        timeToRead
-        frontmatter {
-          date(formatString: "DD MMMM YYYY", locale: "ru")
-          description
-          title
-          tags
-        }
+  }
+  allMarkdownRemark(
+    filter: {fields: {contentType: {eq: "posts"}}}
+    sort: {frontmatter: {date: DESC}}
+  ) {
+    nodes {
+      fields {
+        slug
+      }
+      excerpt
+      timeToRead
+      frontmatter {
+        date(formatString: "DD MMMM YYYY", locale: "ru")
+        description
+        title
+        tags
       }
     }
   }
-`;
+}`;

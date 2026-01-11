@@ -1,3 +1,5 @@
+//src/components/header.js
+
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'gatsby';
@@ -6,6 +8,7 @@ import ThemeSwitch from './theme-switch';
 import {useStaticQuery, graphql} from 'gatsby';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import zuHomeImg from '../images/zu-praktikum.png';
+
 
 //const image = getImage(site.zuhome);
 

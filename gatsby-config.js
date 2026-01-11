@@ -1,4 +1,8 @@
 module.exports = {
+  flags: {
+	  FAST_DEV: true,
+	  DEV_SSR: false,
+	},
   siteMetadata: {
     title: `СБОРКА`,
     author: {
@@ -31,7 +35,6 @@ module.exports = {
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    "gatsby-plugin-use-dark-mode",
     'gatsby-plugin-postcss',
     {
       resolve: "gatsby-source-filesystem",
@@ -84,7 +87,7 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-netlify-cms",
+      resolve: "gatsby-plugin-decap-cms",
       options: {
         modulePath: `${__dirname}/src/netlify-cms/index.js`,
         enableIdentityWidget: true,
@@ -121,26 +124,22 @@ module.exports = {
                 });
               });
             },
-            query: `
-              {
-                allMarkdownRemark(
-                  sort: { order: DESC, fields: [frontmatter___date] },
-                ) {
-                  nodes {
-                    excerpt
-                    html
-                    fields {
-                      slug
-                    }
-                    frontmatter {
-                      title
-                      name
-                      date
-                    }
-                  }
-                }
-              }
-            `,
+            query: `{
+  allMarkdownRemark(sort: {frontmatter: {date: DESC}}) {
+    nodes {
+      excerpt
+      html
+      fields {
+        slug
+      }
+      frontmatter {
+        title
+        name
+        date
+      }
+    }
+  }
+}`,
             output: "/rss.xml",
             title: `RSS по СБОРКЕ`,
           },
@@ -166,6 +165,5 @@ module.exports = {
         icon: `src/images/icon.png`,
       },
     },
-    `gatsby-plugin-react-helmet`,
   ],
 };

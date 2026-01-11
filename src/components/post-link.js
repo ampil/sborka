@@ -1,3 +1,4 @@
+// src/components/post-link.js
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'gatsby';
@@ -27,7 +28,7 @@ export default PostLink;
 
 const PostLinkItem = ({title, excerpt, name, description, slug}) => {
   return (
-    // <div class="index-image">
+    // <div className="index-image">
     (
       <StyledPostLinkItem>
         <PostLinkTitle>
@@ -107,7 +108,11 @@ const PostLinkTitle = styled.h2`
 
   & a {
     text-decoration: none;
-    color: #962020;
+    color: #962020; /* Светлая тема */
+  }
+
+  body.dark-mode & a {
+    color: #ff9999; /* Темная тема */
   }
 
   & a::after {
